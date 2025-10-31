@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071A3D">
+<title>ลอยกระทงออนไลน์ บางรักน้อย</title>
+<link rel="preload" as="image" href="assets/bg-all.jpg">
+<link rel="preload" as="image" href="assets/bg-inriver.png">
+<link rel="icon" href="assets/logo.png">
+<link rel="stylesheet" href="styles.css?v=5">
+<script defer src="theme.js?v=2"></script>
+<script defer src="fireworks.js?v=5"></script>
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="โลโก้" class="logo">
+      <div class="title">
+        <h1>ลอยกระทงออนไลน์</h1>
+        <small>องค์การบริหารส่วนตำบลบางรักน้อย</small>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="index.html">หน้าหลัก</a>
+      <a href="about.html">เกี่ยวกับงานประเพณี</a>
+      <a href="wishes.html">กระทงรวมใจ</a>
+      <a href="stats.html">สถิติ</a>
+    </nav>
+  </header>
+  <main class="container">
+
+<section class="card">
+  <h2>คืนเพ็ญเดือนสิบสอง...ปล่อยคำอธิษฐานของคุณไปกับสายน้ำ</h2>
+  <div class="picker">
+    <input id="wishText" maxlength="120" class="wish" placeholder="พิมพ์คำอธิษฐานของคุณ (ไม่เกิน 120 อักษร)">
+    <button id="floatBtn" class="btn">ลอยเลย!</button>
+  </div>
+  <div class="krathong-choices">
+    <button class="kbtn" data-type="krathong1"><img src="assets/krathong1.png" alt=""> แบบที่ 1</button>
+    <button class="kbtn" data-type="krathong2"><img src="assets/krathong2.png" alt=""> แบบที่ 2</button>
+    <button class="kbtn" data-type="krathong3"><img src="assets/krathong3.png" alt=""> แบบที่ 3</button>
+  </div>
+  <p class="hint">*คำอธิษฐานของคุณที่กด “ลอยเลย!” จะถูกเก็บไว้ใน “กระทงรวมใจ” (ภายในอุปกรณ์ของคุณ)</p>
+</section>
+
+<section id="river" aria-label="แม่น้ำสำหรับปล่อยกระทง">
+  <div class="scene-inriver" aria-hidden="true">
+    <div class="moon-glow"></div>
+  </div>
+  <div class="waterfx" aria-hidden="true"></div>
+  <div id="floatArea" class="float-area"></div>
+</section>
+
+<div class="sharebox card">
+  <button id="saveImageBtn" class="btn alt">📸 บันทึกรูปกระทงนี้</button>
+  <span class="note">— รูปที่บันทึกได้จะเป็นมุมมองแม่น้ำของคุณ</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="main.js?v=5"></script>
+
+  </main>
+  <footer class="foot">© อบต.บางรักน้อย — เว็บไซต์ลอยกระทงออนไลน์ (ทดลอง)</footer>
+</body>
+</html>

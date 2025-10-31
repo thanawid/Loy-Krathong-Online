@@ -1,0 +1,71 @@
+
+@font-face{ font-family:'THSarabunNew'; src: local('Sarabun'), local('TH Sarabun New'); font-display:swap; }
+:root{
+  --bg:#050b1c; --card:#0a1430cc; --border:#2b3b6a66; --text:#e9f0ff;
+  --accent:#5a8bff; --accent2:#ffd166;
+  --fx-wave1: 26s; --fx-wave2: 34s; --fx-bob: 3.6s; --fx-refl: 7s;
+  --page-pad: clamp(8px, 2vw, 16px);
+  --title-size: clamp(18px, 2.6vw, 24px);
+  --text-size: clamp(14px, 1.5vw, 17px);
+  --btn-size: clamp(12px, 1.6vw, 16px);
+  --river-h: clamp(320px, 52vh, 520px);
+  --brand-glow: 0 0 14px #7cc3ff80, 0 0 30px #4dbaff40;
+  --waterline: 0.62;
+}
+*{ box-sizing:border-box } html,body{ height:100%; }
+body{ margin:0; color:var(--text); background:#000; font-family:'THSarabunNew','Prompt',system-ui,-apple-system,Segoe UI,Roboto,Arial; overflow-x:hidden; font-size: var(--text-size); }
+.page-bg{ position: fixed; inset:0; background:#000 url('assets/bg-all.jpg') center center/cover no-repeat; animation: slowPan 60s linear infinite alternate; z-index:-5; pointer-events:none; filter: brightness(0.9); }
+.page-bg::after{ content:""; position:absolute; inset:0; pointer-events:none; background: radial-gradient(1200px 500px at 60% 0%, #0b3d9166, transparent 60%), radial-gradient(900px 400px at 10% 20%, #9b5de533, transparent 60%), radial-gradient(900px 400px at 90% 30%, #00f5d433, transparent 60%); mix-blend-mode: screen;}
+@keyframes slowPan{ from{ background-position:52% 48% } to{ background-position:48% 52% } }
+.topbar{ position: sticky; top:0; z-index:100; backdrop-filter: blur(8px); display:flex; align-items:center; justify-content:space-between; gap:16px; padding:10px 16px; background:#020619cc; border-bottom:1px solid #ffffff16; }
+.brand{ display:flex; align-items:center; gap:12px } .logo{ width:36px; height:36px; object-fit:contain }
+.title h1{ font-size:var(--title-size); margin:0; line-height:1.1; text-shadow: var(--brand-glow) } .title small{ opacity:.8 }
+.nav a{ color:#cfe1ff; text-decoration:none; margin-left:14px } .nav a:hover{ color:#fff }
+.container{ max-width:1000px; margin:24px auto; padding:0 var(--page-pad) }
+.card{ background: var(--card); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow: 0 10px 30px #00000055; }
+.picker{ display:flex; align-items:center; gap:10px; margin-bottom:10px }
+.wish{ flex:1; padding:12px 14px; border-radius:10px; border:1px solid #224; background:#030a24; color:#fff; min-height:42px }
+.btn{ padding:10px 14px; border-radius:999px; border:1px solid #224; cursor:pointer; background:linear-gradient(180deg,#5a8bff,#2248ff); color:#fff; font-weight:700; font-size: var(--btn-size) }
+.btn.alt{ background:linear-gradient(180deg,#ffe082,#ffb703); color:#111 } .btn.danger{ background:linear-gradient(180deg,#ff6b6b,#ef233c); border-color:#5a0 }
+.krathong-choices{ display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap }
+.kbtn{ background:#071234; border:1px solid #2a3e88; color:#d6e4ff; border-radius:12px; padding:8px; display:flex; align-items:center; gap:8px; cursor:pointer; min-height:42px }
+.kbtn img{ width:36px; height:36px; object-fit:contain } .kbtn.active{ outline:2px solid #87cefa }
+.hint{ opacity:.8; margin:4px 0 0 }
+/* River */
+#river{ position: relative; margin:18px 0; height:var(--river-h); border-radius:16px; border:1px solid var(--border); background: linear-gradient(180deg,#0b2a5acc,#061943ee 65%, #05102ccc); overflow:hidden; box-shadow: inset 0 0 60px #00000066, 0 20px 40px #00000066; }
+#river .scene-inriver{ position:absolute; inset:0; background:url('assets/bg-inriver.png') no-repeat center bottom/cover; z-index:-1; pointer-events:none; opacity:.98; animation: scenePan 80s linear infinite alternate; filter: saturate(1.05) brightness(1.04); }
+@keyframes scenePan{ 0%{ background-position:52% bottom; transform:scale(1) } 50%{ background-position:48% bottom; transform:scale(1.02) } 100%{ background-position:52% bottom; transform:scale(1) } }
+.waterfx::before, .waterfx::after{ content:""; position:absolute; left:-10%; right:-10%; height:65%; bottom:-5%; background: radial-gradient(ellipse at 50% 10%, rgba(255,255,255,.15), rgba(255,255,255,0) 60%); mix-blend-mode: overlay; filter: blur(8px); opacity:.42; animation: wave1 26s ease-in-out infinite; }
+.waterfx::after{ height:70%; opacity:.3; filter: blur(12px); animation: wave2 34s ease-in-out infinite; }
+@keyframes wave1{ 0%,100%{ transform: translateX(-3%) translateY(0) } 50%{ transform: translateX(3%) translateY(-1.5%) } }
+@keyframes wave2{ 0%,100%{ transform: translateX(3%) } 50%{ transform: translateX(-3%) } }
+#river .scene-inriver::before{ content:""; position:absolute; inset:0; pointer-events:none; z-index:0; background-image: repeating-linear-gradient(to bottom, rgba(255,255,255,.07) 0px, rgba(255,255,255,.07) 2px, rgba(255,255,255,0) 9px); mix-blend-mode: screen; opacity:.35; transform-origin:center bottom; animation: waveWash 18s linear infinite; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,1) 85%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,1) 85%); }
+@keyframes waveWash{ 0%{ background-position:0 0; transform:scaleY(1) } 50%{ background-position:0 -80px; transform:scaleY(1.05) } 100%{ background-position:0 -160px; transform:scaleY(1) } }
+#river .scene-inriver .moon-glow{ position:absolute; inset:0; pointer-events:none; z-index:1; background: radial-gradient(420px 260px at 50% 36%, rgba(255,245,180,.65), rgba(255,245,180,0) 60%), radial-gradient(600px 360px at 50% 36%, rgba(255,220,120,.25), rgba(255,220,120,0) 60%); mix-blend-mode: screen; filter: blur(0.4px); animation: moonPulse 6s ease-in-out infinite }
+@keyframes moonPulse{ 0%,100%{ opacity:.7; transform: scale(1) } 50%{ opacity:.95; transform: scale(1.02) } }
+.float-area{ position:absolute; inset:0; overflow:hidden }
+.krathong{ position:absolute; will-change: transform; animation: bob 3.6s ease-in-out infinite }
+.krathong img{ display:block; height: clamp(54px, 8vh, 92px) }
+.krathong img.reflection{ transform: scaleY(-1) translateY(6px); opacity: .5; filter: blur(1px); animation: refl 7s ease-in-out infinite }
+@keyframes bob{ 0%,100%{ transform: translateY(0)} 50%{ transform: translateY(-5px)} }
+@keyframes refl{ 0%,100%{ opacity: .38 } 50%{ opacity:.48 } }
+.sharebox{ display:flex; align-items:center; gap:10px; margin-top:12px } .note{ opacity:.8 }
+.foot{ text-align:center; padding:24px; opacity:.7 }
+.fx-toggle{ position: fixed; right:16px; bottom:16px; z-index:10000; background:#0a1030cc; color:#fff; border:1px solid #ffffff33; border-radius:999px; padding:10px 12px; font-weight:700; cursor:pointer; backdrop-filter: blur(6px); }
+.fx-toggle:hover{ filter: brightness(1.1) }
+/* Light mode */
+@media (prefers-color-scheme: light){
+  :root{ --text:#0f1a2f; --card:#f7fbffcc; --border:#bcd1ff88; --bg:#eaf2ff; }
+  body{ background: var(--bg); color: var(--text); }
+  .topbar{ background:#ffffffcc; border-bottom:1px solid #d9e6ff; }
+  .nav a{ color:#274b9c; } .card{ background:#ffffffcc; border-color:#cfe0ff; }
+  #river{ background: linear-gradient(180deg,#bfe3ffcc,#8fc3ffcc 65%, #6aa5ffcc); box-shadow: inset 0 0 40px #6aa5ff55, 0 10px 30px #6aa5ff55; }
+  .page-bg{ filter: brightness(1.08) }
+  .btn{ background: linear-gradient(180deg,#5a8bff,#2248ff); color:#fff }
+  .btn.alt{ background: linear-gradient(180deg,#ffd86b,#ffa726) }
+  .wish{ background:#f4f8ff; color:#0f1a2f; border-color:#bcd1ff } .fx-toggle{ background:#ffffffcc; color:#1b2a5a; border-color:#9bbcff }
+}
+:root[data-time-theme="evening"] .page-bg::after{ background: radial-gradient(1200px 500px at 60% 0%, #0db3a966, transparent 60%), radial-gradient(900px 400px at 10% 20%, #7ce2a933, transparent 60%), radial-gradient(900px 400px at 90% 30%, #00f5d433, transparent 60%); }
+:root[data-time-theme="late"] .page-bg::after{ background: radial-gradient(1200px 500px at 60% 0%, #7a2bd066, transparent 60%), radial-gradient(900px 400px at 15% 25%, #ff79c633, transparent 60%), radial-gradient(900px 400px at 85% 30%, #9b5de533, transparent 60%); }
+/* Tiny mobile tweak */
+@media (max-width: 420px){ :root{ --waterline: 0.64; } }
