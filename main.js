@@ -8,9 +8,10 @@
   document.querySelectorAll('.kbtn').forEach(b=>{
     b.addEventListener('click', ()=>{
       document.querySelectorAll('.kbtn').forEach(x=>x.classList.remove('active'));
-      b.classList.add('active'); ktype = b.dataset.type || 'krathong1';
+      b.classList.add('active'); ktype = b.dataset.type;
     });
   });
+  const first=document.querySelector('.kbtn'); if(first) first.classList.add('active');
 
   function addWish(text){
     const arr = JSON.parse(localStorage.getItem('wishes')||'[]');
@@ -18,31 +19,38 @@
     localStorage.setItem('wishes', JSON.stringify(arr));
   }
 
-  function preload(src){ return new Promise((res,rej)=>{ const im=new Image(); im.onload=()=>res(src); im.onerror=rej; im.src=src; }); }
-
-  async function spawn(){
+  function spawn(){
     const river = document.getElementById('river');
-    let src = `assets/${ktype}.png`;
-    try{ await preload(src); }catch(e){ src = 'assets/krathong1.png'; }
 
-    const el = document.createElement('div'); el.className='krathong';
-    const img = document.createElement('img'); img.src = src; img.alt='กระทง';
-    const refl= document.createElement('img'); refl.className='reflection'; refl.src = src;
-    el.appendChild(img); el.appendChild(refl); area.appendChild(el);
+    const el = document.createElement('div');
+    el.className = 'krathong';
 
-    function position(){
+    const img = document.createElement('img');
+    img.src = `assets/${ktype}.png`;
+    img.alt = 'กระทง';
+
+    const refl = document.createElement('img');
+    refl.className = 'reflection';
+    refl.src = `assets/${ktype}.png`;
+
+    el.appendChild(img);
+    el.appendChild(refl);
+    area.appendChild(el);
+
+    img.onload = () => {
       const H = river.clientHeight;
-      const kh = img.naturalHeight || img.height || 84;
+      const kh = img.naturalHeight || img.height;
       const wl = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--waterline')) || 0.62;
       const waterline = H * wl;
       const bobOffset = kh * 0.55;
       const jitter = (H * 0.06) * (Math.random() - 0.5);
+
       el.style.left = '-100px';
       el.style.top  = (waterline - bobOffset + jitter) + 'px';
 
-      const total = area.clientWidth + 220;
-      const speed = 36 + Math.random()*18;
-      let x = -110;
+      const total = area.clientWidth + 200;
+      const speed = 35 + Math.random()*20;
+      let x = -100;
       function step(){
         x += speed * 0.016;
         el.style.transform = `translateX(${x}px)`;
@@ -50,16 +58,30 @@
         else el.remove();
       }
       requestAnimationFrame(step);
-    }
-    if (img.complete) position(); else img.onload = position;
+    };
   }
 
-  if (btn){
+  if(btn){
     btn.addEventListener('click', ()=>{
       const text = (wishText.value || '').trim();
-      addWish(text);
-      spawn();
-      wishText.value='';
+      if(!text){ alert('กรุณาพิมพ์คำอธิษฐาน'); return; }
+      addWish(text); spawn(); wishText.value='';
+    });
+  }
+
+  const btnSave = document.getElementById('saveImageBtn');
+  const river = document.getElementById('river');
+  if(btnSave && window.html2canvas){
+    btnSave.addEventListener('click', async ()=>{
+      btnSave.disabled = true;
+      try{
+        const canvas = await html2canvas(river, { useCORS:true, backgroundColor: null, scale:2 });
+        const a = document.createElement('a');
+        a.download = 'loy-krathong.png';
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+      }catch(e){ alert('ไม่สามารถบันทึกรูปได้'); }
+      btnSave.disabled = false;
     });
   }
 })();
