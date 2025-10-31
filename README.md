@@ -1,12 +1,16 @@
+# ลอยกระทงออนไลน์ PRO — บางรักน้อย 🌕🪷
 
-# ลอยกระทงออนไลน์ – Final Universal Edition (บางรักน้อย)
-- น้ำเคลื่อนไหว + แสงจันทร์ glow + พลุ + ธีมตามเวลา + Light Mode + กระทงลอยตรงระดับน้ำ + Responsive ทุกอุปกรณ์
-- หน้า: index, about, wishes, stats
-- ทรัพยากร: assets/*
+ฟีเจอร์
+- 🌊 ฉาก Night Sky + แม่น้ำ (ใช้ภาพ bg.jpg ที่คุณส่งมา)
+- 🪷 เลือกแบบกระทง (krathong1–3.png ที่คุณส่งมา)
+- 🔗 ลิงก์สั้น `?id=<docId>` — ใช้งานได้จริงเมื่อเปิด Firebase (Local ทดสอบได้เฉพาะเครื่อง)
+- 📊 หน้า `stats.html` สรุปจำนวน, Top 5 คำอธิษฐาน, สไตล์ยอดนิยม
 
-## Deploy (GitHub Pages)
-1) อัปโหลดไฟล์ทั้งหมดขึ้น repo
-2) Settings → Pages → Deploy from a branch → Branch: main, Folder: /(root) → Save
-3) เปิด URL ที่ GitHub ให้มา
+## ใช้งานทันที (Local)
+เปิด `index.html` → พิมพ์คำอธิษฐาน → เลือกสไตล์ → “ลอยเลย!” → คัดลอกลิงก์สั้น (ใช้ดูในเครื่องนี้ได้)
+ดู `wishes.html` และ `stats.html` ได้เลย
 
-ข้อมูลคำอธิษฐานเก็บไว้ใน LocalStorage ฝั่งผู้ใช้เท่านั้น
+## เปิดใช้ Firebase
+แก้ `config.js` → `storageType: 'firebase'` และใส่คอนฟิก Firestore + Anonymous Auth
+
+— อัปเดต 2025-10-31 04:19
