@@ -5,13 +5,14 @@
   const wishText = document.getElementById('wishText');
   let ktype = 'krathong1';
 
+  // Button choices (image-only)
   document.querySelectorAll('.kbtn').forEach(b=>{
     b.addEventListener('click', ()=>{
       document.querySelectorAll('.kbtn').forEach(x=>x.classList.remove('active'));
-      b.classList.add('active'); ktype = b.dataset.type;
+      b.classList.add('active');
+      ktype = b.dataset.type || 'krathong1';
     });
   });
-  const first=document.querySelector('.kbtn'); if(first) first.classList.add('active');
 
   function addWish(text){
     const arr = JSON.parse(localStorage.getItem('wishes')||'[]');
@@ -25,22 +26,23 @@
     const el = document.createElement('div');
     el.className = 'krathong';
 
+    const src = `assets/${ktype}.png`;
     const img = document.createElement('img');
-    img.src = `assets/${ktype}.png`;
-    img.alt = 'กระทง';
+    img.src = src; img.alt = 'กระทง';
 
     const refl = document.createElement('img');
     refl.className = 'reflection';
-    refl.src = `assets/${ktype}.png`;
+    refl.src = src;
 
     el.appendChild(img);
     el.appendChild(refl);
     area.appendChild(el);
 
-    img.onload = () => {
+    function position(){
       const H = river.clientHeight;
-      const kh = img.naturalHeight || img.height;
-      const wl = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--waterline')) || 0.62;
+      const kh = img.naturalHeight || img.height || 84;
+      const wl = parseFloat(getComputedStyle(document.documentElement)
+        .getPropertyValue('--waterline')) || 0.62;
       const waterline = H * wl;
       const bobOffset = kh * 0.55;
       const jitter = (H * 0.06) * (Math.random() - 0.5);
@@ -48,9 +50,9 @@
       el.style.left = '-100px';
       el.style.top  = (waterline - bobOffset + jitter) + 'px';
 
-      const total = area.clientWidth + 200;
-      const speed = 35 + Math.random()*20;
-      let x = -100;
+      const total = area.clientWidth + 220;
+      const speed = 36 + Math.random()*18;
+      let x = -110;
       function step(){
         x += speed * 0.016;
         el.style.transform = `translateX(${x}px)`;
@@ -58,17 +60,18 @@
         else el.remove();
       }
       requestAnimationFrame(step);
-    };
+    }
+    if (img.complete) position(); else img.onload = position;
   }
 
   if(btn){
     btn.addEventListener('click', ()=>{
-      const text = (wishText.value || '').trim();
-      if(!text){ alert('กรุณาพิมพ์คำอธิษฐาน'); return; }
+      const text = (wishText.value || '').trim(); // allow empty
       addWish(text); spawn(); wishText.value='';
     });
   }
 
+  // Save image
   const btnSave = document.getElementById('saveImageBtn');
   const river = document.getElementById('river');
   if(btnSave && window.html2canvas){

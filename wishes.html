@@ -8,7 +8,7 @@
 <link rel="preload" as="image" href="assets/bg-all.jpg">
 <link rel="preload" as="image" href="assets/bg-inriver.png">
 <link rel="icon" href="assets/logo.png">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 <script defer src="theme.js?v=2"></script>
 <script defer src="fireworks.js?v=5"></script>
 </head>
@@ -16,7 +16,7 @@
   <div class="page-bg" aria-hidden="true"></div>
   <header class="topbar">
     <div class="brand">
-      <img src="assets/logo.png" alt="โลโก้" class="logo">
+      <img src="assets/logo.png" alt="โลโก้ อบต.บางรักน้อย" class="logo">
       <div class="title">
         <h1>ลอยกระทงออนไลน์</h1>
         <small>องค์การบริหารส่วนตำบลบางรักน้อย</small>
@@ -45,7 +45,7 @@
   const data=JSON.parse(localStorage.getItem('wishes')||'[]');
   if(!data.length){ box.innerHTML='<p>ยังไม่มีคำอธิษฐาน ลองไปลอยกระทงที่หน้าหลักก่อนนะ</p>'; }
   else{
-    box.innerHTML=data.map((w,i)=>'<div class="wish-item"><b>#'+(i+1)+'</b> — '+w.text.replace(/[<>]/g,"")+' <small>('+(new Date(w.time)).toLocaleString()+')</small></div>').join('');
+    box.innerHTML=data.map((w,i)=>'<div class="wish-item"><b>#'+(i+1)+'</b> — '+(w.text||'(ว่าง)').replace(/[<>]/g,"")+' <small>('+(new Date(w.time)).toLocaleString()+')</small></div>').join('');
   }
   document.getElementById('clearBtn').onclick=()=>{
     if(confirm('แน่ใจหรือไม่ที่จะล้างข้อมูลคำอธิษฐานทั้งหมดในเครื่องนี้?')){
@@ -53,13 +53,13 @@
     }
   };
   document.getElementById('exportBtn').onclick=()=>{
-    const blob=new Blob([data.map((w,i)=>`#${i+1} ${w.text}  (${new Date(w.time).toLocaleString()})`).join('\n')],{type:'text/plain'});
+    const blob=new Blob([data.map((w,i)=>`#${i+1} ${w.text||'(ว่าง)'}  (${new Date(w.time).toLocaleString()})`).join('\n')],{type:'text/plain'});
     const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='wishes.txt'; a.click(); URL.revokeObjectURL(a.href);
   };
 })();
 </script>
 
   </main>
-  <footer class="foot">© อบต.บางรักน้อย — เว็บไซต์ลอยกระทงออนไลน์ (ทดลอง)</footer>
+  <footer class="foot">© อบต.บางรักน้อย — เว็บไซต์ลอยกระทงออนไลน์ (PATCH2)</footer>
 </body>
 </html>
